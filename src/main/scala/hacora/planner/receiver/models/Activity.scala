@@ -1,12 +1,15 @@
 package hacora.planner.receiver.models
 
+import java.util.UUID
+
 /**
   * Created by momo on 5/20/16.
   */
 
 
 case class Activity(
-                     val timestamp: Long = System.currentTimeMillis,
+                     val userId: UUID,
+                     val source: Option[String],
                      val sensors: List[SensorEvent],
                      val location: Option[Location])
 

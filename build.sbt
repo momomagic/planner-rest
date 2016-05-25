@@ -12,8 +12,10 @@ libraryDependencies ++= {
   val sprayV = "1.3.3"
   Seq(
     "io.spray"            %% "spray-can"      %  sprayV withSources() withJavadoc(),
-    "io.spray"            %%  "spray-routing" % sprayV withSources() withJavadoc(),
-    "io.spray"            %%  "spray-json"    % "1.3.2",
+    "io.spray"            %% "spray-routing" % sprayV withSources() withJavadoc(),
+    "io.spray"            %% "spray-client"  % sprayV withSources() withJavadoc(),
+    "io.spray"            %%  "spray-json"    % "1.3.2" withSources() withJavadoc(),
+    "io.spray"            %% "spray-caching" % sprayV withSources() withJavadoc(),
     "com.datastax.cassandra"  % "cassandra-driver-core" % "3.0.2",
     "io.spray"            %%  "spray-testkit" % sprayV  % "test",
     "com.typesafe.akka"   %%  "akka-actor"    % akkaV,

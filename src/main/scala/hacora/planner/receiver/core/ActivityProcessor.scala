@@ -1,27 +1,21 @@
 package hacora.planner.receiver.core
 
 import akka.actor.Actor
-import com.datastax.driver.core.Cluster
-import hacora.planner.receiver.core.ActivityProcessor.GetActivity
-import hacora.planner.receiver.models.Activity
+import com.datastax.driver.core.querybuilder.QueryBuilder
+import com.datastax.driver.core.utils.UUIDs
+import com.datastax.driver.core.{BoundStatement, Cluster, PreparedStatement}
+import hacora.planner.receiver.models.{Activity, SensorEvent}
 
 /**
   * Created by momo on 5/20/16.
   */
 class ActivityProcessor(cluster: Cluster) extends Actor {
+  import ActivityProcessor._
 
-  val session = cluster.connect(KeySpaces.)
-  val preparedStatement = session.prepare("INSERT INTO activity(key, user_user, text, createdat) VALUES (?, ?, ?, ?);")
 
-  def addActivity(activity: Option[Activity]): String = {
-    activity match {
-      case Some(activity) => {
-        println(activity)
-        return "success"
-      }
-      case None => "Failed"
-    }
-
+  def addActivity(activity: Option[Activity]): Option[Activity] = {
+    session(cluster).executeAsync(preparedStatement.bind(act))
+    return activity
   }
 
 
@@ -35,5 +29,30 @@ class ActivityProcessor(cluster: Cluster) extends Actor {
 object ActivityProcessor {
   case class GetActivity(activity: Option[Activity])
 
+  def prepareStatement(): BoundStatement{
+
+  }
+
+  private val session =  (cluster: Cluster) => cluster.connect(Constants.KeySpeace)
+
+  def insertActivity(cluster: Cluster,activity: Activity): PreparedStatement = {
+    import QueryBuilder.bindMarker
+    val insert = QueryBuilder.
+                  insertInto(Constants.table).
+                  value("user_id", activity.userId).
+                  value("created", UUIDs.timeBased())
+
+    activity.source foreach {source =>
+      insert.value("source",source)
+    }
+
+    activity.sensors foreach {events =>
+      SensorEvent(events.sensorType,events.accuracy,events.values.getOrElse(null))
+    }
+
+    source  text,
+    events set<frozen <motion_event>>,
+      location frozen<location>,
+  }
 }
 
