@@ -5,7 +5,7 @@ import akka.io.IO
 import akka.pattern.ask
 import akka.util.Timeout
 import com.typesafe.config.ConfigFactory
-import hacora.planner.receiver.client.ActivityStream
+import hacora.planner.receiver.server.ActivityStream
 import spray.can.Http
 
 import scala.concurrent.duration._

@@ -27,16 +27,16 @@ CREATE TYPE IF NOT EXISTS hacora.location(
 CREATE TYPE IF NOT EXISTS hacora.motion_event(
     sensorType text,
     accuracy int,
-    values set<float>
+    values list<float>
 );
 
 
 
 CREATE TABLE IF NOT EXISTS hacora.activities(
-    user_id uuid,
+    user_id bigint,
     created timeuuid,
     source  text,
-    events set<frozen <motion_event>>,
+    events list<frozen <motion_event>>,
     location frozen<location>,
     PRIMARY KEY (user_id,created)
 ) WITH CLUSTERING ORDER BY (created DESC);

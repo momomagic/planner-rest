@@ -1,9 +1,9 @@
-package hacora.planner.receiver.client
+package hacora.planner.receiver.server
 
 import akka.actor.{Actor, Props}
+import akka.event.Logging
 import hacora.planner.receiver.core.ActivityProcessor
 import hacora.planner.receiver.models._
-import ActivityProcessor.GetActivity
 import spray.httpx.SprayJsonSupport
 import spray.json.DefaultJsonProtocol
 import spray.routing._
@@ -12,13 +12,18 @@ class ActivityStream extends HttpService with Actor {
 
   val activityProcessor = context.actorOf(Props[ActivityProcessor])
 
+  val log = Logging(context.system, this)
 
   def actorRefFactory = context
 
   def receive = runRoute(routes)
 
 
-  def sendActivity(activity: Activity) =  activityProcessor ! GetActivity(Some(activity))
+  def sendActivity(activity: Activity) = {
+    log.debug("received activity will start sending it ")
+    activityProcessor ! activity
+  }
+
 
   object CustomJsonProtocol extends DefaultJsonProtocol with SprayJsonSupport {
     implicit val addressFormat = jsonFormat8(Address)

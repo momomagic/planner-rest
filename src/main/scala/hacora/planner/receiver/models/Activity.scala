@@ -8,18 +8,16 @@ import java.util.UUID
 
 
 case class Activity(
-                     val userId: UUID,
-                     val source: Option[String],
+                     val userId: Long,
                      val sensors: List[SensorEvent],
-                     val location: Option[Location])
-
+                     val location: Location)
 case class SensorEvent(
                         val sensorType: String,
                         val accuracy: Int,
                         val values: Option[List[Float]])
 
 case class Location(
-                     val altitude: Double,
+                     val latitude: Double,
                      val longitude: Double,
                      val speed: Float = 0,
                      val geoCode: Option[GeoCode])
