@@ -9,19 +9,11 @@ CREATE TYPE IF NOT EXISTS hacora.address(
     premises    text
 );
 
-CREATE TYPE IF NOT EXISTS hacora.geo_code(
-    lowerLeftLatitude double,
-    lowerLeftLongitude double,
-    upperRightLatitude double,
-    upperRightLongitude double,
-    addresses set<frozen <address>>
-);
-
 CREATE TYPE IF NOT EXISTS hacora.location(
     altitude double,
     longitude double,
     speed float,
-    geoCode frozen <geo_code>
+    addresses set<frozen <address>>
 );
 
 CREATE TYPE IF NOT EXISTS hacora.motion_event(
@@ -36,7 +28,7 @@ CREATE TABLE IF NOT EXISTS hacora.activities(
     user_id bigint,
     created timeuuid,
     source  text,
-    events list<frozen <motion_event>>,
+    event frozen <motion_event>,
     location frozen<location>,
     PRIMARY KEY (user_id,created)
 ) WITH CLUSTERING ORDER BY (created DESC);

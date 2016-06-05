@@ -1,7 +1,5 @@
 package hacora.planner.receiver.models
 
-import java.util.UUID
-
 /**
   * Created by momo on 5/20/16.
   */
@@ -9,7 +7,7 @@ import java.util.UUID
 
 case class Activity(
                      val userId: Long,
-                     val sensors: List[SensorEvent],
+                     val sensor: SensorEvent,
                      val location: Location)
 case class SensorEvent(
                         val sensorType: String,
@@ -20,14 +18,7 @@ case class Location(
                      val latitude: Double,
                      val longitude: Double,
                      val speed: Float = 0,
-                     val geoCode: Option[GeoCode])
-
-case class GeoCode(
-                    val lowerLeftLatitude: Option[Double],
-                    val lowerLeftLongitude: Option[Double],
-                    val upperRightLatitude: Option[Double],
-                    val upperRightLongitude: Option[Double],
-                    val addresses: Option[List[Address]])
+                     val addressList: Option[List[Address]])
 
 case class Address(
                     val addressArea: Option[String],

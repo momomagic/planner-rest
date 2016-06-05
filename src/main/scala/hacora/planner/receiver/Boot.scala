@@ -23,13 +23,11 @@ object Boot extends App{
 
   implicit val timeout = Timeout(20.seconds)
 
-
-
   actorSystem.registerOnTermination {
     actorSystem.log.info("Actor system shutdown")
   }
 
-  IO(Http) ? Http.Bind(activitiesListener, interface = "localhost",config.getInt("port"))
+  IO(Http) ? Http.Bind(activitiesListener, interface = "0.0.0.0",port = 8080)
 
 
 }

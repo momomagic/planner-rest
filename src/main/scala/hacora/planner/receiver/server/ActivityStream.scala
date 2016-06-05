@@ -27,7 +27,6 @@ class ActivityStream extends HttpService with Actor {
 
   object CustomJsonProtocol extends DefaultJsonProtocol with SprayJsonSupport {
     implicit val addressFormat = jsonFormat8(Address)
-    implicit val geoCodeFormat = jsonFormat5(GeoCode)
     implicit val locationFormat = jsonFormat4(Location)
     implicit val sensorFormat = jsonFormat3(SensorEvent)
     implicit val ActivityFormat = jsonFormat3(Activity)
